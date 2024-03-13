@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import DeleteButton from './DeleteButton'; 
 import { getProductDetails } from '../services/apiService';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ProductDetails = () => {
   // Access route parameter
@@ -56,7 +54,9 @@ const ProductDetails = () => {
             <li>Brand: {product.brand}</li>
           </ul>
           <button className="btn btn-primary me-2" onClick={() => navigate(`/product/edit/${product.id}`)}>Edit Product</button>
-          <DeleteButton productId={product.id} onProductDeleted={onProductDeleted} />
+          {/* You can replace the DeleteButton with your own delete functionality */}
+          {/* <DeleteButton productId={product.id} onProductDeleted={onProductDeleted} /> */}
+          <button className="btn btn-danger" onClick={() => onProductDeleted(product)}>Delete Product</button>
         </div>
       </div>
     </div>

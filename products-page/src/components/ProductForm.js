@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { addProduct, editProduct, getProductDetails } from '../services/apiService';
 import { useProductsContext } from '../context/ProductsContext';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ProductForm = () => {
-  // Access route parameter
   const { productId } = useParams();
   const navigate = useNavigate();
 
@@ -29,7 +27,6 @@ const ProductForm = () => {
         setError('');
       } catch (error) {
         console.error("Error fetching product details:", error);
-        setLoading(false);
         setError('Failed to load product details');
       } finally {
         setLoading(false);
@@ -54,17 +51,17 @@ const ProductForm = () => {
 
     const apiCall = productId ? editProduct(productId, product) : addProduct(product);
 
-    apiCall.then(response => {
-      setLoading(false);
-      saveProduct(response.data);
-      // Navigate back
-      navigate(-1);
-    })
-    .catch(error => {
-      console.error("Error saving product:", error);
-      setError('Failed to save product');
-      setLoading(false);
-    });
+    apiCall
+      .then(response => {
+        setLoading(false);
+        saveProduct(response.data);
+        navigate(-1); // Navigate back
+      })
+      .catch(error => {
+        console.error("Error saving product:", error);
+        setError('Failed to save product');
+        setLoading(false);
+      });
   };
 
   if (loading) return <div>Loading...</div>;
